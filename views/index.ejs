@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <form method="post" enctype="multipart/form-data" action="/uploadMultiple">
+	  <div class="form-group">
+	    <label for="exampleInputEmail1">Name </label>
+	    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+	  </div>
+	</br>
+	  
+	  <div class="form-group">
+	    <label for="exampleInputFile">Picture</label>
+	    <input type="file" id="exampleInputFile" name="pic" multiple="true">
+	  </div>
+	  <div class="form-group">
+	    <label for="exampleInputFile">Thumbnail</label>
+	    <input type="file" id="exampleInputFile" name="thumb">
+	  </div>
+	  
+	  <button type="submit" class="btn btn-default">Submit</button>
+	</form>
+  </body>
+</html>

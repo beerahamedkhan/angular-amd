@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app = "myApp">
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+
+  </head>
+  <body ng-controller="myCtrl">
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <form method="post" enctype="multipart/form-data" name="fileUploadForm">
+	  <div class="form-group">
+	    <label for="exampleInputEmail1">Name </label>
+	    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+	  </div>
+	</br>
+	  
+	  <div class="form-group">
+	    <label for="exampleInputFile">Picture</label>
+	    <input type="file" id="exampleInputFile" name="pic" file-model = "myFile">
+	  </div>
+
+	  
+	  <button type="button" class="btn btn-default" ng-click="uploadFile()">Upload File</button>
+	</form>
+
+	<script>
+         var myApp = angular.module('myApp', []);
+         
+      
+      
+         myApp.service('fileUpload', ['$http', function ($http) {
+            this.uploadFileToUrl = function(file, uploadUrl){
+               var fd = new FormData();
+               fd.append('pic', file);
+            
+               $http.post(uploadUrl, fd, {
+                  headers: {'Content-Type': undefined}
+               })
+            
+               .success(function(){
+               })
+            
+               .error(function(){
+               });
+            }
+         }]);
+      
+         myApp.controller('myCtrl', ['$scope', 'fileUpload', function($scope, fileUpload){
+            $scope.uploadFile = function(){
+               var file = $scope.myFile;
+                                      console.log(file)
+
+               
+               var uploadUrl = "/upload";
+               fileUpload.uploadFileToUrl(file, uploadUrl);
+            };
+         }]);
+
+         myApp.directive('fileModel', ['$parse', function ($parse) {
+            return {
+               restrict: 'A',
+               link: function(scope, element, attrs) {
+            
+                  element.bind('change', function(){
+                     scope.$apply(function(){
+                        console.log(element)
+                        scope.myFile = element[0].files[0];
+                     });
+                  });
+               }
+            };
+         }]);
+			
+      </script>
+  </body>
+</html>
